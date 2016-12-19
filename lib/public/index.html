@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		body *{
+			font-family: Arial;
+			font-weight: bold;
+		}
+		body {
+			background-color: steelblue;
+		}
+		input, select {
+			padding: 10px 10px 10px 10px;
+			margin-bottom: 10px;
+		}
+		input {
+			font-size: 20px;
+
+		}
+		form {
+			color: white;
+			padding: 10px 10px 10px 10px;
+		}
+
+		.bloc-control {
+			background-color: lightblue;
+		}
+
+		.tempIn {
+			background-color: greenyellow;
+		}
+
+		.tempOut {
+			background-color: orangered;
+		}
+
+	</style>
+</head>
+<body>
+	<h1>Invencibles</h1>
+
+	<div class="bloc-control">
+		<p>IPs Servidors Caspar</p>
+		Caspar Plató: <input id="ipCasparPlato" type="text" value="192.168.100.70"/>
+		<br>
+		Caspar DSK: <input id="ipCasparDSK" type="text" value="192.168.100.80"/>
+		<br>
+		<input id="updateIPs" type="button" value="UPDATE"/>
+	</div>
+
+	<div class="bloc-control">
+		<p>Mostrar Logo Invencibles</p>
+		<input class="tempIn" id="LogoInPlato" type="button" value="IN PLATÓ"/>
+		<input class="tempOut" id="LogoOutPlato" type="button" value="OUT PLATÓ"/>
+		<input class="tempIn" id="LogoInDSK" type="button" value="IN DSK"/>
+		<input class="tempOut" id="LogoOutDSK" type="button" value="OUT DSK"/>
+	</div>
+
+	<div class="bloc-control">
+		<p>Mostrar Text (només Plató)</p>
+		<input id="customTextInput" type="text" value="Lorem Ipsum"/>
+		<input class="tempIn" id="customTextIn" type="button" value="IN PLATO"/>
+		<input class="tempOut" id="customTextOut" type="button" value="OUT PLATO"/>
+	</div>
+
+	<div class="bloc-control">
+		<p>Mostrar Puntuació (Plató i DSK)</p>
+		Equip Blau: <input id="puntsEquipBlauInput" type="text" value="0"/>
+		<br>
+		Equip Vermell: <input id="puntsEquipVermellInput" type="text" value="0"/>
+		<br>
+		<input class="tempIn" id="puntsIn" type="button" value="IN"/>
+		<input class="tempOut" id="puntsOut" type="button" value="OUT"/>
+	</div>
+
+	<div class="bloc-control">
+		<p>Mostrar Cronòmetre (Plató i DSK)</p>
+		Temps (en segons): <input id="tempsCrono" type="text" value="120"/>
+		<br>
+		<input class="tempIn" id="cronoIn" type="button" value="IN"/>
+		<input id="cronoStart" type="button" value="START"/>
+		<input id="cronoStop" type="button" value="STOP"/>
+		<input class="tempOut" id="cronoOut" type="button" value="OUT"/>
+	</div>
+
+	<script src="socket.io.js"></script>
+	<script>
+		var socket = io();
+
+		/**	IPs Servidors Caspar **/
+
+		var updateIPs = document.getElementById('updateIPs');
+		updateIPs.onclick = function() {
+			var ipCasparPlato = document
+				.getElementById('ipCasparPlato')
+				.value;
+			var ipCasparDSK = document
+				.getElementById('ipCasparDSK')
+				.value;
+
+			console.log('Envio noves IPs:');
+			console.log(ipCasparPlato);
+			console.log(ipCasparDSK);
+			socket.emit('updateIPs', ipCasparPlato, ipCasparDSK);
+		}
+
+		/**	Mostrar Logo Invencibles **/
+		var LogoInPlato = document.getElementById('LogoInPlato');
+		var LogoOutPlato = document.getElementById('LogoOutPlato');
+		var LogoInDSK = document.getElementById('LogoInDSK');
+		var LogoOutDSK = document.getElementById('LogoOutDSK');
+		LogoInPlato.onclick = function() {
+			console.log('Envio: Logo IN Plato');
+			socket.emit('LogoInPlato');
+		}
+		LogoOutPlato.onclick = function() {
+			console.log('Envio: Logo OUT Plato');
+			socket.emit('LogoOutPlato');
+		}
+		LogoInDSK.onclick = function() {
+			console.log('Envio: Logo IN DSK');
+			socket.emit('LogoInDSK');
+		}
+		LogoOutDSK.onclick = function() {
+			console.log('Envio: Logo OUT DSK');
+			socket.emit('LogoOutDSK');
+		}
+
+		/**	Mostrar Text **/
+		var customTextIn = document.getElementById('customTextIn');
+		var customTextOut = document.getElementById('customTextOut');
+		customTextIn.onclick = function() {
+			var customTextInput = document
+				.getElementById('customTextInput')
+				.value;
+			console.log('Envio: Custom Text IN', customTextInput);
+			socket.emit('customTextIn', customTextInput);
+		}
+		customTextOut.onclick = function() {
+			console.log('Envio: Custom Text OUT');
+			socket.emit('customTextOut');
+		}
+
+		/**	Mostrar Puntuació **/
+		var puntsIn = document.getElementById('puntsIn');
+		var puntsOut = document.getElementById('puntsOut');
+		puntsIn.onclick = function() {
+			var puntsEquipBlauInput = document
+				.getElementById('puntsEquipBlauInput')
+				.value;
+			var puntsEquipVermellInput = document
+				.getElementById('puntsEquipVermellInput')
+				.value;
+
+			var punts = new Object();
+			punts.blau = puntsEquipBlauInput;
+			punts.vermell = puntsEquipVermellInput;
+			console.log('Envio: Punts IN', punts);
+			socket.emit('puntsIn', punts);
+		}
+		puntsOut.onclick = function() {
+			console.log('Envio: Punts OUT')
+			socket.emit('puntsOut');
+		}
+
+		/**	Mostrar Cronòmetre **/
+		var cronoIn = document.getElementById('cronoIn');
+		var cronoStart = document.getElementById('cronoStart');
+		var cronoStop = document.getElementById('cronoStop');
+		var cronoOut = document.getElementById('cronoOut');
+		cronoIn.onclick = function() {
+			var tempsCrono = document.getElementById('tempsCrono').value;
+			console.log('Envio: Crono IN', tempsCrono);
+			socket.emit('cronoIn', tempsCrono);
+		}
+		cronoStart.onclick = function() {
+			console.log('Envio: Crono START');
+			socket.emit('cronoStart');
+		}
+		cronoStop.onclick = function() {
+			console.log('Envio: Crono STOP');
+			socket.emit('cronoStop');
+		}
+		cronoOut.onclick = function() {
+			console.log('Envio: Crono OUT');
+			socket.emit('cronoOut');
+		}
+
+
+
+	</script>
+</body>
+</html>

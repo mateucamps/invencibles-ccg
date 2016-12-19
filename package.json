@@ -1,0 +1,20 @@
+{
+  "name": "invencibles-ccg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "caspar-cg": "latest",
+    "express": "latest",
+    "node-mysql": "latest",
+    "socket.io": "^1.7.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
