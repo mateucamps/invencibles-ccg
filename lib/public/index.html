@@ -41,9 +41,9 @@
 
 	<div class="bloc-control">
 		<p>IPs Servidors Caspar</p>
-		Caspar Plató: <input id="ipCasparPlato" type="text" value="192.168.100.70"/>
+		Caspar Plató: <input id="ipCasparPlato" type="text" value="0.0.0.0"/>
 		<br>
-		Caspar DSK: <input id="ipCasparDSK" type="text" value="192.168.100.80"/>
+		Caspar DSK: <input id="ipCasparDSK" type="text" value="0.0.0.0"/>
 		<br>
 		<input id="updateIPs" type="button" value="UPDATE"/>
 	</div>
@@ -77,6 +77,11 @@
 		<p>Mostrar Cronòmetre (Plató i DSK)</p>
 		Temps (en segons): <input id="tempsCrono" type="text" value="120"/>
 		<br>
+		<input id="setTo030" type="button" value="0:30"/>
+		<input id="setTo100" type="button" value="1:00"/>
+		<input id="setTo130" type="button" value="1:30"/>
+		<input id="setTo200" type="button" value="2:00"/>
+		<br>
 		<input class="tempIn" id="cronoIn" type="button" value="IN"/>
 		<input id="cronoStart" type="button" value="START"/>
 		<input id="cronoStop" type="button" value="STOP"/>
@@ -88,7 +93,6 @@
 		var socket = io();
 
 		/**	IPs Servidors Caspar **/
-
 		var updateIPs = document.getElementById('updateIPs');
 		updateIPs.onclick = function() {
 			var ipCasparPlato = document
@@ -98,11 +102,23 @@
 				.getElementById('ipCasparDSK')
 				.value;
 
-			console.log('Envio noves IPs:');
-			console.log(ipCasparPlato);
-			console.log(ipCasparDSK);
-			socket.emit('updateIPs', ipCasparPlato, ipCasparDSK);
+			var ips = new Object();
+			ips.ipCasparPlato = ipCasparPlato;
+			ips.ipCasparDSK = ipCasparDSK;
+
+			console.log('Envio noves IPs:', ips);
+			socket.emit('updateIPs',ips);
 		}
+
+		socket.on('updateIPsWeb', function(ips) {
+			console.log('He rebut:', ips);
+			var ipCasparDSK = document.getElementById('ipCasparDSK');
+			var ipCasparPlato = document.getElementById('ipCasparPlato');
+			ipCasparDSK.value = ips.ipCasparDSK;
+			ipCasparPlato.value = ips.ipCasparPlato;
+
+		});
+
 
 		/**	Mostrar Logo Invencibles **/
 		var LogoInPlato = document.getElementById('LogoInPlato');
@@ -168,6 +184,24 @@
 		var cronoStart = document.getElementById('cronoStart');
 		var cronoStop = document.getElementById('cronoStop');
 		var cronoOut = document.getElementById('cronoOut');
+		var setTo030 = document.getElementById('setTo030');
+		var setTo100 = document.getElementById('setTo100');
+		var setTo130 = document.getElementById('setTo130');
+		var setTo200 = document.getElementById('setTo200');
+
+		setTo030.onclick = function() {
+			document.getElementById('tempsCrono').value = "30";
+		}
+		setTo100.onclick = function() {
+			document.getElementById('tempsCrono').value = "60";
+		}
+		setTo130.onclick = function() {
+			document.getElementById('tempsCrono').value = "90";
+		}
+		setTo200.onclick = function() {
+			document.getElementById('tempsCrono').value = "120";
+		}
+
 		cronoIn.onclick = function() {
 			var tempsCrono = document.getElementById('tempsCrono').value;
 			console.log('Envio: Crono IN', tempsCrono);
@@ -185,8 +219,6 @@
 			console.log('Envio: Crono OUT');
 			socket.emit('cronoOut');
 		}
-
-
 
 	</script>
 </body>
