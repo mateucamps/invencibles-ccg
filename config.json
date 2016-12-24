@@ -1,6 +1,42 @@
 {
-    "ips" : {
+   "ips" : {
       "ipCasparPlato" : "192.168.100.50",
       "ipCasparDSK" : "192.168.100.70"
-    }
+   },
+   "chyrons-persones-indiv" : [
+      "Pep", "Maria", "Joan", "Josep", "Nom1", "Nom2", "Nom3"
+   ],
+   "chyrons-persones-doble" : [
+      {
+         "esquerra" : "Oriol",
+         "dreta" : "Aïda"
+      },
+      {
+         "esquerra" : "Ratín",
+         "dreta" : "Ratún"
+      },
+      {
+         "esquerra" : "NomEsquerra",
+         "dreta" : "NomDreta"
+      }
+
+   ],
+   "chyrons-persones-triple" : [
+      {
+         "esquerra" : "Nen-Blau1",
+         "centre" : "Nen-Blau2",
+         "dreta" : "Nen-Blau3"
+      },
+      {
+         "esquerra" : "Nen-Vermell1",
+         "centre" : "Nen-Vermell2",
+         "dreta" : "Nen-Vermell3"
+      },
+      {
+         "esquerra" : "PersonaESQ",
+         "centre" : "PersonaCENT",
+         "dreta" : "PersonaDRE"
+      }
+
+   ]
 }
