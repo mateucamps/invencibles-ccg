@@ -244,7 +244,9 @@
 		}
 
 		function segons_a_mm_ss(seg) {
-			return moment(seg).format('mm ss').toString();
+			var str = moment(seg, 'ss').format('mm ss').toString();
+			console.log(str);
+			return str;
 		}
 
 		cronoStart.onclick = function() {
