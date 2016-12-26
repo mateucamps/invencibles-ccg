@@ -1,12 +1,14 @@
 var Web = require('./lib/web');
 var config = require('./config.json');
-var casparPlato = require('./lib/caspar');
-var casparDSK = require('./lib/caspar');
 
-console.log("ip caspar plato", config.ips.ipCasparPlato);
-casparPlato.ccgInit(config.ips.ipCasparPlato);
-exports.casparPlato = casparPlato;
+var casparPlato = require('./lib/caspar1');
+var casparDSK = require('./lib/caspar2');
 
-console.log("ip caspar dsk", config.ips.ipCasparDSK);
 casparDSK.ccgInit(config.ips.ipCasparDSK);
+casparPlato.ccgInit(config.ips.ipCasparPlato);
+
+exports.casparPlato = casparPlato;
 exports.casparDSK = casparDSK;
+
+console.log("IP DSK:", casparDSK.quinaIp());
+console.log("IP PLATO:", casparPlato.quinaIp());

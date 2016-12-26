@@ -49,6 +49,11 @@
 	</div>
 
 	<div class="bloc-control">
+		<p>Control CasparCG</p>
+		<input id="clearAll" type="button" value="Clear All"/>
+	</div>
+
+	<div class="bloc-control">
 		<p>Mostrar Logo Invencibles</p>
 		<input class="tempIn" id="LogoInPlato" type="button" value="IN PLATÓ"/>
 		<input class="tempOut" id="LogoOutPlato" type="button" value="OUT PLATÓ"/>
@@ -65,9 +70,9 @@
 
 	<div class="bloc-control">
 		<p>Mostrar Puntuació (Plató i DSK)</p>
-		Equip Blau: <input id="puntsEquipBlauInput" type="text" value="0"/>
-		<br>
 		Equip Vermell: <input id="puntsEquipVermellInput" type="text" value="0"/>
+		<br>
+		Equip Blau: <input id="puntsEquipBlauInput" type="text" value="0"/>
 		<br>
 		<input class="tempIn" id="puntsIn" type="button" value="IN"/>
 		<input class="tempOut" id="puntsOut" type="button" value="OUT"/>
@@ -140,6 +145,12 @@
 			ipCasparPlato.value = ips.ipCasparPlato;
 
 		});
+		/** Control CasparCG **/
+		var clearAll = document.getElementById('clearAll');
+		clearAll.onclick = function() {
+			console.log('Envio: Clear ALL');
+			socket.emit('clearAll');
+		}
 
 
 		/**	Mostrar Logo Invencibles **/
