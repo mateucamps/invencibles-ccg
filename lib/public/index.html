@@ -116,6 +116,7 @@
 	</div>
 
 	<script src="socket.io.js"></script>
+	<script src="moment.min.js"></script>
 	<script>
 		var socket = io();
 
@@ -221,6 +222,7 @@
 		var setTo100 = document.getElementById('setTo100');
 		var setTo130 = document.getElementById('setTo130');
 		var setTo200 = document.getElementById('setTo200');
+		document.getElementById('cronoStop').disabled = true;
 
 		setTo030.onclick = function() {
 			document.getElementById('tempsCrono').value = "30";
@@ -242,23 +244,35 @@
 		}
 
 		function segons_a_mm_ss(seg) {
-			return seg;
+			return moment(seg).format('mm ss').toString();
 		}
 
 		cronoStart.onclick = function() {
 			console.log('Envio: Crono START');
+
 			var tempsCrono = document.getElementById('tempsCrono').value;
 			document.getElementById('cronoStart').disabled = true;
-			setInterval(function() {
-				socket.emit('cronoStart', segons_a_mm_ss(tempsCrono));
+			document.getElementById('cronoStop').disabled = false;
+
+			var temps = setInterval(function() {
 				tempsCrono = tempsCrono - 1;
-				if(tempsCrono == 0) clearInterval();
+				document.getElementById('tempsCrono').value = tempsCrono;
+				if(tempsCrono == 0) {
+					clearInterval(temps);
+					document.getElementById('cronoStart').disabled = false;
+					document.getElementById('cronoStop').disabled = true;
+				}
+				socket.emit('cronoStart', segons_a_mm_ss(tempsCrono));
 			}, 1000);
+				cronoStop.onclick = function() {
+					console.log('Envio: Crono STOP');
+					socket.emit('cronoStop');
+					clearInterval(temps);
+					document.getElementById('cronoStart').disabled = false;
+					document.getElementById('cronoStop').disabled = true;
+				}
 		}
-		cronoStop.onclick = function() {
-			console.log('Envio: Crono STOP');
-			socket.emit('cronoStop');
-		}
+
 		cronoOut.onclick = function() {
 			console.log('Envio: Crono OUT');
 			socket.emit('cronoOut');
