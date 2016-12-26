@@ -1,7 +1,7 @@
 {
    "ips" : {
-      "ipCasparPlato" : "192.168.100.50",
-      "ipCasparDSK" : "192.168.100.70"
+      "ipCasparPlato" : "192.168.1.110",
+      "ipCasparDSK" : "192.168.1.107"
    },
    "chyrons-persones-indiv" : [
       "Pep", "Maria", "Joan", "Josep", "Nom1", "Nom2", "Nom3"

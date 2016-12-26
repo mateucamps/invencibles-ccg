@@ -1,6 +1,10 @@
 var Web = require('./lib/web');
-// var CasparCG = require('./lib/caspar');
+var config = require('./config.json');
+var casparPlato = require('./lib/caspar');
+var casparDSK = require('./lib/caspar');
 
-exports.diguesHola = function() {
-	console.log('hola!');
-};
+casparPlato.ccgInit(config.ips.ipCasparPlato);
+casparDSK.ccgInit(config.ips.ipCasparDSK);
+
+exports.casparPlato = casparPlato;
+exports.casparDSK = casparDSK;
