@@ -240,9 +240,20 @@
 			console.log('Envio: Crono IN', tempsCrono);
 			socket.emit('cronoIn', tempsCrono);
 		}
+
+		function segons_a_mm_ss(seg) {
+			return seg;
+		}
+
 		cronoStart.onclick = function() {
 			console.log('Envio: Crono START');
-			socket.emit('cronoStart');
+			var tempsCrono = document.getElementById('tempsCrono').value;
+			document.getElementById('cronoStart').disabled = true;
+			setInterval(function() {
+				socket.emit('cronoStart', segons_a_mm_ss(tempsCrono));
+				tempsCrono = tempsCrono - 1;
+				if(tempsCrono == 0) clearInterval();
+			}, 1000);
 		}
 		cronoStop.onclick = function() {
 			console.log('Envio: Crono STOP');
