@@ -244,9 +244,10 @@
 		}
 
 		function segons_a_mm_ss(seg) {
-			var str = moment(seg, 'ss').format('mm ss').toString();
-			console.log(str);
-			return str;
+			var date = new Date(null);
+			date.setSeconds(seg); // specify value for SECONDS here
+			console.log(date.toISOString().substr(14,5));
+			return date.toISOString().substr(14,5);
 		}
 
 		cronoStart.onclick = function() {
