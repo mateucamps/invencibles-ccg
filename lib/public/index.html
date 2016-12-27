@@ -65,10 +65,15 @@
 		<input id="customTextInput" type="text" value="Lorem Ipsum"/>
 		<input class="tempIn" id="customTextIn" type="button" value="IN PLATO"/>
 		<input class="tempOut" id="customTextOut" type="button" value="OUT PLATO"/>
+		<br>
+		<input id="text_cansocansoneta" type="button" value="Cançó Cançoneta"/>
+		<input id="text_escombraria" type="button" value="Escombraria"/>
+		<input id="text_circuit" type="button" value="Circuit"/>
+		<input id="text_repteratolins" type="button" value="Repte dels ratolins"/>
 	</div>
 
 	<div class="bloc-control">
-		<p>Mostrar Puntuació (Plató i DSK)</p>
+		<p>Recompte Total (Plató i DSK)</p>
 		Equip Vermell: <input id="puntsEquipVermellInput" type="text" value="0"/>
 		<br>
 		Equip Blau: <input id="puntsEquipBlauInput" type="text" value="0"/>
@@ -105,7 +110,7 @@
 
 	</div>
 
-	<div class="bloc-control">
+	<div class="bloc-control" style="visibility:hidden">
 	<p> Comptador Punts Doble (plató i dsk)</p>
 	Equip Vermell: <input id="puntsVermellText" type="text" value="0"/>
 	<input id="puntsVermellSuma1" type="button" value="+1"/>
@@ -119,15 +124,15 @@
 	<input id="puntsDobleOut" class="tempOut" type="button" value="OUT"/>
 	</div>
 
-	<div class="bloc-control">
+	<div class="bloc-control" style="visibility:hidden">
 	<p> chyrons persones (només dsk)</p>
 	</div>
 
-	<div class="bloc-control">
+	<div class="bloc-control" style="visibility:hidden">
 	<p> [PER FER] ruletes assignatures (plató i dsk)</p>
 	</div>
 
-	<div class="bloc-control">
+	<div class="bloc-control" style="visibility:hidden">
 	<p> [PER FER]  cançó (plató i dsk)</p>
 	</div>
 
@@ -195,6 +200,25 @@
 		/**	Mostrar Text **/
 		var customTextIn = document.getElementById('customTextIn');
 		var customTextOut = document.getElementById('customTextOut');
+
+		var text_cansocansoneta = document.getElementById('text_cansocansoneta');
+		var text_escombraria = document.getElementById('text_escombraria');
+		var text_circuit = document.getElementById('text_circuit');
+		var text_repteratolins = document.getElementById('text_repteratolins');
+
+		text_cansocansoneta.onclick = function() {
+			document.getElementById('customTextInput').value = "Cançó Cançoneta";
+		}
+		text_escombraria.onclick = function() {
+			document.getElementById('customTextInput').value = "Escombraria";
+		}
+		text_circuit.onclick = function() {
+			document.getElementById('customTextInput').value = "Circuit";
+		}
+		text_repteratolins.onclick = function() {
+			document.getElementById('customTextInput').value = "Repte dels ratolins";
+		}
+
 		customTextIn.onclick = function() {
 			var customTextInput = document
 				.getElementById('customTextInput')
