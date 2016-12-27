@@ -15,7 +15,6 @@
 		}
 		input {
 			font-size: 20px;
-
 		}
 		form {
 			color: white;
@@ -93,18 +92,35 @@
 		<input class="tempOut" id="cronoOut" type="button" value="OUT"/>
 	</div>
 
+
+
+	<div class="bloc-control">
+		<p> Comptador Punts Individual (plató i dsk)</p>
+		<input id="puntsIndivText" type="text" value="0"/>
+		<br>
+		<input class="tempIn" id="puntsIndivIn" type="button" value="IN"/>
+		<input id="puntsIndivSuma1" type="button" value="+1"/>
+		<input id="puntsIndivResta1" type="button" value="-1"/>
+		<input class="tempOut" id="puntsIndivOut" type="button" value="OUT"/>
+
+	</div>
+
+	<div class="bloc-control">
+	<p> Comptador Punts Doble (plató i dsk)</p>
+	Equip Vermell: <input id="puntsVermellText" type="text" value="0"/>
+	<input id="puntsVermellSuma1" type="button" value="+1"/>
+	<input id="puntsVermellResta1" type="button" value="-1"/>
+	<br>
+	Equip Blau: <input id="puntsBlauText" type="text" value="0"/>
+	<input id="puntsBlauSuma1" type="button" value="+1"/>
+	<input id="puntsBlauResta1" type="button" value="-1"/>
+	<br>
+	<input id="puntsDobleIn" class="tempIn" type="button" value="IN"/>
+	<input id="puntsDobleOut" class="tempOut" type="button" value="OUT"/>
+	</div>
+
 	<div class="bloc-control">
 	<p> chyrons persones (només dsk)</p>
-	</div>
-
-
-
-	<div class="bloc-control">
-	<p> conta punts individual (plató i dsk)</p>
-	</div>
-
-	<div class="bloc-control">
-	<p> conta punts doble (per equips) (plató i dsk)</p>
 	</div>
 
 	<div class="bloc-control">
@@ -237,17 +253,17 @@
 			document.getElementById('tempsCrono').value = "120";
 		}
 
-		cronoIn.onclick = function() {
-			var tempsCrono = document.getElementById('tempsCrono').value;
-			console.log('Envio: Crono IN', tempsCrono);
-			socket.emit('cronoIn', tempsCrono);
-		}
-
 		function segons_a_mm_ss(seg) {
 			var date = new Date(null);
 			date.setSeconds(seg); // specify value for SECONDS here
 			console.log(date.toISOString().substr(14,5));
 			return date.toISOString().substr(14,5);
+		}
+
+		cronoIn.onclick = function() {
+			var tempsCrono = document.getElementById('tempsCrono').value;
+			console.log('Envio: Crono IN', segons_a_mm_ss(tempsCrono));
+			socket.emit('cronoIn', segons_a_mm_ss(tempsCrono));
 		}
 
 		cronoStart.onclick = function() {
@@ -280,6 +296,61 @@
 			console.log('Envio: Crono OUT');
 			socket.emit('cronoOut');
 		}
+
+		/** Comptador Punts Individual **/
+		var puntsIndivIn = document.getElementById('puntsIndivIn');
+		var puntsIndivOut = document.getElementById('puntsIndivOut');
+		var puntsIndivSuma1 = document.getElementById('puntsIndivSuma1');
+		var puntsIndivResta1 = document.getElementById('puntsIndivResta1');
+
+		puntsIndivIn.onclick = function() {
+			var num = document.getElementById('puntsIndivText').value;
+			console.log('Envio: Punts IN', num);
+			socket.emit('puntsIndivIn', num);
+
+		}
+		puntsIndivOut.onclick = function() {
+			console.log('Envio: Punts OUT');
+			socket.emit('puntsIndivOut');
+
+		}
+
+		puntsIndivSuma1.onclick = function() {
+			var num = document.getElementById('puntsIndivText').value;
+			document.getElementById('puntsIndivText').value = Number(num) + 1;
+			console.log('Envio: Suma 1', Number(num)+1);
+			socket.emit('puntsIndivSuma1', String(Number(num)+1));
+		}
+
+		puntsIndivResta1.onclick = function() {
+			var num = document.getElementById('puntsIndivText').value;
+			document.getElementById('puntsIndivText').value = Number(num) - 1;
+			console.log('Envio: Resta 1');
+			socket.emit('puntsIndivResta1', String( Number(num)-1) );
+		}
+
+		/** Comptador Punts Doble **/
+		var puntsDobleIn = document.getElementById('puntsDobleIn');
+		var puntsDobleOut = document.getElementById('puntsDobleOut');
+
+		var puntsVermellSuma1 = document.getElementById('puntsVermellSuma1');
+		var puntsVermellResta1 = document.getElementById('puntsVermellResta1');
+		var puntsBlauSuma1 = document.getElementById('puntsBlauSuma1');
+		var puntsBlauResta1 = document.getElementById('puntsBlauResta1');
+
+		puntsDobleIn.onclick = function() {
+			numV = document.getElementById('puntsVermellText').value;
+			numB = document.getElementById('puntsBlauText').value;
+			console.log('Envio: Punts Doble IN', numV, numB)
+			socket.emit('puntsDobleIn', numV, numB);
+		}
+
+
+
+
+
+
+
 
 	</script>
 </body>
