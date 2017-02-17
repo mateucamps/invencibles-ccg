@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "casparcg-connection": "latest",
     "caspar-cg": "latest",
     "express": "latest",
     "node-mysql": "latest",
