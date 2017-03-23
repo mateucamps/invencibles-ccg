@@ -138,122 +138,137 @@
 
 	<script src="socket.io.js"></script>
 	<script src="moment.min.js"></script>
+	<script src="jquery-3.1.1.min.js"></script>
 	<script>
 		var socket = io();
 
 		/**	IPs Servidors Caspar **/
-		var updateIPs = document.getElementById('updateIPs');
-		updateIPs.onclick = function() {
-			var ipCasparPlato = document
-				.getElementById('ipCasparPlato')
-				.value;
-			var ipCasparDSK = document
-				.getElementById('ipCasparDSK')
-				.value;
-
-			var ips = new Object();
-			ips.ipCasparPlato = ipCasparPlato;
-			ips.ipCasparDSK = ipCasparDSK;
-
+		$('#updateIPs').click(function() {
+			var ipCasparPlato = $('#ipCasparPlato').val();
+			var ipCasparDSK = $('#ipCasparDSK').val();
+			var ips = {
+				'ipCasparPlato'	:	ipCasparPlato,
+				'ipCasparDSK'		:	ipCasparDSK
+			};
 			console.log('Envio noves IPs:', ips);
 			socket.emit('updateIPs',ips);
-		}
+		});
 
 		socket.on('updateIPsWeb', function(ips) {
 			console.log('He rebut:', ips);
-			var ipCasparDSK = document.getElementById('ipCasparDSK');
-			var ipCasparPlato = document.getElementById('ipCasparPlato');
-			ipCasparDSK.value = ips.ipCasparDSK;
-			ipCasparPlato.value = ips.ipCasparPlato;
-
+			$('#ipCasparPlato').val(ips.ipCasparPlato);
+			$('#ipCasparDSK').val(ips.ipCasparDSK);
 		});
-		/** Control CasparCG **/
-		var clearAll = document.getElementById('clearAll');
-		clearAll.onclick = function() {
-			console.log('Envio: Clear ALL');
-			socket.emit('clearAll');
-		}
 
+		/** Control CasparCG **/
+		$('#clearAll').click(function() {
+			console.log('Envio: Clear All');
+			socket.emit('clearAll');
+		});
 
 		/**	Mostrar Logo Invencibles **/
-		var LogoInPlato = document.getElementById('LogoInPlato');
-		var LogoOutPlato = document.getElementById('LogoOutPlato');
-		var LogoInDSK = document.getElementById('LogoInDSK');
-		var LogoOutDSK = document.getElementById('LogoOutDSK');
-		LogoInPlato.onclick = function() {
+		$('#LogoInPlato').click(function() {
 			console.log('Envio: Logo IN Plato');
 			socket.emit('LogoInPlato');
-		}
-		LogoOutPlato.onclick = function() {
+		});
+		$('#LogoOutPlato').click(function() {
 			console.log('Envio: Logo OUT Plato');
 			socket.emit('LogoOutPlato');
-		}
-		LogoInDSK.onclick = function() {
+		});
+		$('#LogoInDSK').click(function() {
 			console.log('Envio: Logo IN DSK');
 			socket.emit('LogoInDSK');
-		}
-		LogoOutDSK.onclick = function() {
+		});
+		$('#LogoOutDSK').click(function() {
 			console.log('Envio: Logo OUT DSK');
 			socket.emit('LogoOutDSK');
-		}
+		});
 
 		/**	Mostrar Text **/
 		var customTextIn = document.getElementById('customTextIn');
 		var customTextOut = document.getElementById('customTextOut');
 
-		var text_cansocansoneta = document.getElementById('text_cansocansoneta');
-		var text_escombraria = document.getElementById('text_escombraria');
-		var text_circuit = document.getElementById('text_circuit');
-		var text_repteratolins = document.getElementById('text_repteratolins');
+		$('#text_cansocansoneta').click(function() {
+			$('#customTextInput').val('Cançó Cançoneta');
+		});
+		$('#text_escombraria').click(function() {
+			$('#customTextInput').val('Escombraria');
+		});
+		$('#text_circuit').click(function() {
+			$('#customTextInput').val('Circuit');
+		});
+		$('#text_repteratolins').click(function() {
+			$('#customTextInput').val('Repte dels ratolins');
+		});
 
-		text_cansocansoneta.onclick = function() {
-			document.getElementById('customTextInput').value = "Cançó Cançoneta";
-		}
-		text_escombraria.onclick = function() {
-			document.getElementById('customTextInput').value = "Escombraria";
-		}
-		text_circuit.onclick = function() {
-			document.getElementById('customTextInput').value = "Circuit";
-		}
-		text_repteratolins.onclick = function() {
-			document.getElementById('customTextInput').value = "Repte dels ratolins";
-		}
-
-		customTextIn.onclick = function() {
-			var customTextInput = document
-				.getElementById('customTextInput')
-				.value;
+		$('#customTextIn').click(function() {
+			var customTextInput = $('#customTextInput').val();
 			console.log('Envio: Custom Text IN', customTextInput);
 			socket.emit('customTextIn', customTextInput);
-		}
-		customTextOut.onclick = function() {
+		});
+
+		$('#customTextOut').click(function() {
 			console.log('Envio: Custom Text OUT');
 			socket.emit('customTextOut');
-		}
+		});
 
 		/**	Mostrar Puntuació **/
-		var puntsIn = document.getElementById('puntsIn');
-		var puntsOut = document.getElementById('puntsOut');
-		puntsIn.onclick = function() {
-			var puntsEquipBlauInput = document
-				.getElementById('puntsEquipBlauInput')
-				.value;
-			var puntsEquipVermellInput = document
-				.getElementById('puntsEquipVermellInput')
-				.value;
-
-			var punts = new Object();
-			punts.blau = puntsEquipBlauInput;
-			punts.vermell = puntsEquipVermellInput;
+		$('#puntsIn').click(function() {
+			var puntsEquipBlauInput = $('#puntsEquipBlauInput').val();
+			var puntsEquipVermellInput = $('#puntsEquipVermellInput').val();
+			var punts = {
+				'blau'		:	puntsEquipBlauInput,
+				'vermell'	:	puntsEquipVermellInput
+			};
 			console.log('Envio: Punts IN', punts);
 			socket.emit('puntsIn', punts);
-		}
-		puntsOut.onclick = function() {
+		});
+
+		$('#puntsOut').click(function() {
 			console.log('Envio: Punts OUT')
 			socket.emit('puntsOut');
-		}
+		});
+
 
 		/**	Mostrar Cronòmetre **/
+		$('#cronoIn').click(function() {
+			var tempsCrono = document.getElementById('tempsCrono').value;
+			console.log('Envio: Crono IN', segons_a_mm_ss(tempsCrono));
+			socket.emit('cronoIn', segons_a_mm_ss(tempsCrono));
+		});
+
+		$('#cronoStart').click(function() {
+			console.log('Envio: Crono START');
+
+			var tempsCrono = document.getElementById('tempsCrono').value;
+			document.getElementById('cronoStart').disabled = true;
+			document.getElementById('cronoStop').disabled = false;
+
+			var temps = setInterval(function() {
+				tempsCrono = tempsCrono - 1;
+				document.getElementById('tempsCrono').value = tempsCrono;
+				if(tempsCrono == 0) {
+					clearInterval(temps);
+					document.getElementById('cronoStart').disabled = false;
+					document.getElementById('cronoStop').disabled = true;
+				}
+				socket.emit('cronoStart', segons_a_mm_ss(tempsCrono));
+			}, 1000);
+				cronoStop.onclick = function() {
+					console.log('Envio: Crono STOP');
+					socket.emit('cronoStop');
+					clearInterval(temps);
+					document.getElementById('cronoStart').disabled = false;
+					document.getElementById('cronoStop').disabled = true;
+				}
+		});
+
+		$('#cronoStop').click(function() {}); // no cal?
+		$('#cronoOut').click(function() {});
+		$('#setTo030').click(function() {});
+		$('#setTo100').click(function() {});
+		$('#setTo130').click(function() {});
+		$('#setTo200').click(function() {});
 		var cronoIn = document.getElementById('cronoIn');
 		var cronoStart = document.getElementById('cronoStart');
 		var cronoStop = document.getElementById('cronoStop');
@@ -282,38 +297,6 @@
 			date.setSeconds(seg); // specify value for SECONDS here
 			console.log(date.toISOString().substr(14,5));
 			return date.toISOString().substr(14,5);
-		}
-
-		cronoIn.onclick = function() {
-			var tempsCrono = document.getElementById('tempsCrono').value;
-			console.log('Envio: Crono IN', segons_a_mm_ss(tempsCrono));
-			socket.emit('cronoIn', segons_a_mm_ss(tempsCrono));
-		}
-
-		cronoStart.onclick = function() {
-			console.log('Envio: Crono START');
-
-			var tempsCrono = document.getElementById('tempsCrono').value;
-			document.getElementById('cronoStart').disabled = true;
-			document.getElementById('cronoStop').disabled = false;
-
-			var temps = setInterval(function() {
-				tempsCrono = tempsCrono - 1;
-				document.getElementById('tempsCrono').value = tempsCrono;
-				if(tempsCrono == 0) {
-					clearInterval(temps);
-					document.getElementById('cronoStart').disabled = false;
-					document.getElementById('cronoStop').disabled = true;
-				}
-				socket.emit('cronoStart', segons_a_mm_ss(tempsCrono));
-			}, 1000);
-				cronoStop.onclick = function() {
-					console.log('Envio: Crono STOP');
-					socket.emit('cronoStop');
-					clearInterval(temps);
-					document.getElementById('cronoStart').disabled = false;
-					document.getElementById('cronoStop').disabled = true;
-				}
 		}
 
 		cronoOut.onclick = function() {
